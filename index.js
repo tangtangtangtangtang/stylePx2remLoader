@@ -8,23 +8,21 @@ const defaultopts = {
 const opts = loaderUtils.getOptions(this);
 const config = Object.assign({}, defaultopts, opts);
 //匹配style到style结束
-const ZPXRegExp = /(style)(.*)((\d+)px).*\}\}/
+const styleRegExp = /style(.||\n)*(\d+)px(.||\n)*\}\}/
+//匹配script标签
+const scriptRegExp = /\<script\>(.||\n)*\<\/script\>/
 
 module.exports = function (source) {
-    let pxGlobalRegExp = new RegExp(ZPXRegExp.source, 'g');
-    if (this.cacheable) {
-        this.cacheable();
-    }
-
-    if (pxGlobalRegExp.test(source)) {
-        return source.replace(pxGlobalRegExp, ($0, $1) => {
-            let PXRegExp = /\d+px/
+    let scriptGlobalRegExp = new RegExp(scriptRegExp.source, 'g');
+    let styleGlobalRegExp = new RegExp(styleRegExp.source, 'g')
+    if (scriptGlobalRegExp.test(source) && styleGlobalRegExp.test(source)) {
+        return source.replace(styleGlobalRegExp, ($0, $1) => {
+            let PXRegExp = /\d+px/g
             let res = $0.replace(PXRegExp, ($0, $1) => {
-                let val = $1 / config.remUnit;
+                let val = $0.substr(0, $0.length - 2) / config.remUnit;
                 val = parseFloat(val.toFixed(config.remFixed));
                 return val === 0 ? val : val + 'rem';
             })
-            console.log(res)
             return res
         });
     } else {
