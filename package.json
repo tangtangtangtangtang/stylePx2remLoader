@@ -4,11 +4,18 @@
     "description": "转内联标签的sytle到rem",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test found\" && exit 1"
+        "test": "jest"
     },
     "author": "tangtangtangtangtang",
     "license": "MIT",
     "dependencies": {
         "loader-utils": "^1.1.0"
+    },
+    "devDependencies": {
+        "babel-jest": "^23.6.0",
+        "babel-preset-env": "^1.7.0",
+        "jest": "^23.6.0",
+        "memory-fs": "^0.4.1",
+        "webpack": "^4.23.1"
     }
 }
