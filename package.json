@@ -1,6 +1,6 @@
 {
     "name": "style-px2rem-loader",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "转内联标签的sytle到rem",
     "main": "index.js",
     "scripts": {
